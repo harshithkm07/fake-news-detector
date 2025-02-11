@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyberpunk Fake News Detector</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(145deg, #10101e, #19192d);
+           
+            text-shadow: 0 0 5px #83c7dd;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .detector-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px #ccb8b8cc;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            text-shadow: 0 0 15px #00c3ff;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #ffffff;
+            border: 2px solid #00c3ff;
+            padding: 12px;
+            resize: none;
+            margin-bottom: 15px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        textarea:focus {
+            box-shadow: 0 0 15px #00c3ff;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            border: 2px solid #00c3ff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #00c3ff;
+            color: #000;
+            box-shadow: 0 0 15px #00c3ff;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 18px;
+            text-shadow: 0 0 5px #010101;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        .result.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .fake-news {
+            color: red;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .legitimate-news {
+            color: rgb(1, 56, 1);
+            animation: bounce 0.6s ease-in-out;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        a {
+            display: block;
+            color: #080808;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="detector-container">
+        <h1>Fake News Detector</h1>
+        <textarea id="newsInput" placeholder="Paste news article here..."></textarea>
+        <button onclick="detectFakeNews()">Check for Fake News</button>
+        <div class="result" id="result"></div>
+        <a href="login-signup.html">Back to Signup Page</a>
+    </div>
+
+    <script>
+        function detectFakeNews() {
+            const input = document.getElementById('newsInput').value;
+            const result = document.getElementById('result');
+            const fakeKeywords = ['hoax', 'fake', 'scam', 'false'];
+            const isFake = fakeKeywords.some(keyword => input.toLowerCase().includes(keyword));
+
+            // Add a "show" class to make the result visible
+            result.classList.add("show");
+
+            if (isFake) {
+                result.innerText = '⚠️ This article may be fake.';
+                result.classList.add('fake-news');
+                result.classList.remove('legitimate-news');
+            } else {
+                result.innerText = '✅ This article seems legitimate.';
+                result.classList.add('legitimate-news');
+                result.classList.remove('fake-news');
+            }
+        }
+    </script>
+</body>
+</html>
